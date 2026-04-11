@@ -16,4 +16,4 @@ ggplot(traits, aes(x = spp))+
 ggplot(traits, aes(x = spp))+
   geom_boxplot(aes(y = lwc, group = interaction(spp, site)))
 
-anova(lm(lwc ~ spp + site, traits))
+TukeyHSD(aov(lm(lwc ~ spp + site, traits)))

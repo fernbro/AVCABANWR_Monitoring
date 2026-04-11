@@ -30,9 +30,8 @@ pairs(spp_emm)
 
 phys2 <- phys1 %>% 
   mutate(cond_cor = case_when(site == "control" ~ cond - 57.35,
-                              .default = cond))
-
-phys_stats <- phys1 %>% 
+                              .default = cond)) %>% 
+  as.data.frame()
 
 ggplot(phys2, aes(x = spp, y = cond_cor))+
   geom_boxplot(aes(group = interaction(spp, site), fill = site))
