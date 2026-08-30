@@ -18,7 +18,7 @@ phys1$res_con <- residuals(time_mod)
 
 spp_mod <- lm(res_con ~ spp*site, phys1)
 
-spp_emm <- emmeans(spp_mod, ~spp:site)
+spp_emm <- emmeans(spp_mod, ~ spp + site)
 summary(spp_mod)
 
 pairs(spp_emm)
@@ -37,3 +37,15 @@ ggplot(phys2, aes(x = spp, y = cond_cor))+
   geom_boxplot(aes(group = interaction(spp, site), fill = site))
 ggplot(phys2, aes(x = spp, y = cond_cor))+
   geom_point(aes(group = interaction(spp, site), color = site))
+
+
+# phi PS II
+
+
+ggplot(phys2, aes(x = spp, y = phips2))+
+  geom_boxplot(alpha=0.5)
+ggplot(phys2, aes(x = site, y = phips2))+
+  geom_boxplot(alpha=0.5)
+
+TukeyHSD(aov(phips2 ~ spp, phys2)) # no significant differences
+TukeyHSD(aov(phips2 ~ site, phys2)) # treatment was higher than control

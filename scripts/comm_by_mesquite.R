@@ -2,6 +2,8 @@ library(tidyverse)
 library(vegan)
 library(ggrepel)
 
+# comm = com analysis ;)
+
 banwr <- read_csv("data/community_fall2025.csv") # read in community matrix
 provel <- read_csv("data/mesquite_canopy.csv") %>% 
   mutate(MS_canopy = 1)
@@ -14,71 +16,73 @@ mesq <- dplyr::select(banwr, plot, MS_canopy) %>%
   mutate(MS_canopy = case_when(MS_canopy == 0 ~ F,
                                MS_canopy == 1 ~ T))
 
-# plot summaries for Dr. Gallery & Maria:
+plot_sf <- st_read("data/BANWR_Plots.shp")
 
-sums <- banwr %>% 
-  full_join(plots) %>% 
-  group_by(plot, site) %>% 
-  summarise(llg = ERALEH,
-            mesquite = MS_canopy)
-
-total_cov <- banwr %>% 
-  select(-MS_canopy, -plot) %>% 
-  mutate(plant_cover = rowSums(.)) %>% 
-  select(plant_cover)
-total_cov$plot <- banwr$plot
-
-type_cov1 <- banwr %>% 
-  select(-MS_canopy) %>% 
-  pivot_longer(`HOPOBT`:`DESCOV`, names_to = "spp", values_to = "cover") %>% 
-  filter(cover != 0)
-
-species <- data.frame(unique(type_cov1$spp));names(species) <- "spp"
-write_csv(species, "data/species_list.csv")
-
-# traits:
-traits <- read_csv("data/species_traits.csv")
-
-type_cov <- full_join(type_cov1, traits) %>% 
-  group_by(plot, nativity) %>% 
-  summarise(cover = sum(cover)) %>% 
-  pivot_wider(names_from = nativity, values_from = cover)
-# type_cov[is.na(type_cov)] <- 0 # turn NA values to 0
-type_cov <- inner_join(type_cov, plots)
-
-ggplot(type_cov, aes(x = native, y = exotic))+
-  geom_point(aes(color = site))
-
-# make a data frame with native/nonnative??
-
-# how many plots have mesquite canopy?
-View(banwr %>% 
-       inner_join(plots) %>% 
-  pivot_longer(`HOPOBT`:`DESCOV`, names_to = "spp", values_to = "cover") %>% 
-  select(-spp, -cover) %>% 
-  unique() %>% 
-  group_by(site, MS_canopy) %>% 
-  summarise(count = n()))
-
-# how many plots have mesquite as a spp?
-View(banwr %>% 
-       inner_join(plots) %>% 
-       pivot_longer(`HOPOBT`:`DESCOV`, names_to = "spp", values_to = "cover") %>% 
-       filter(spp == "PROVEL") %>% 
-       mutate(pres = case_when(cover == 0 ~ F, cover != 0 ~ T)) %>% 
-       select(-MS_canopy) %>% 
-       group_by(site, pres) %>% 
-       summarise(count = n()))
-
-# LLG?
-View(banwr %>% 
-       inner_join(plots) %>% 
-       pivot_longer(`HOPOBT`:`DESCOV`, names_to = "spp", values_to = "cover") %>% 
-       filter(spp == "ERALEH") %>% 
-       mutate(pres = case_when(cover == 0 ~ F, cover != 0 ~ T)) %>% 
-       select(-MS_canopy) %>% 
-       group_by(pres, site) %>% 
-       summarise(count = n()))
+# # plot summaries for Dr. Gallery & Maria:
+# 
+# sums <- banwr %>% 
+#   full_join(plots) %>% 
+#   group_by(plot, site) %>% 
+#   summarise(llg = ERALEH,
+#             mesquite = MS_canopy)
+# 
+# total_cov <- banwr %>% 
+#   select(-MS_canopy, -plot) %>% 
+#   mutate(plant_cover = rowSums(.)) %>% 
+#   select(plant_cover)
+# total_cov$plot <- banwr$plot
+# 
+# type_cov1 <- banwr %>% 
+#   select(-MS_canopy) %>% 
+#   pivot_longer(`HOPOBT`:`DESCOV`, names_to = "spp", values_to = "cover") %>% 
+#   filter(cover != 0)
+# 
+# species <- data.frame(unique(type_cov1$spp));names(species) <- "spp"
+# write_csv(species, "data/species_list.csv")
+# 
+# # traits:
+# traits <- read_csv("data/species_traits.csv")
+# 
+# type_cov <- full_join(type_cov1, traits) %>% 
+#   group_by(plot, nativity) %>% 
+#   summarise(cover = sum(cover)) %>% 
+#   pivot_wider(names_from = nativity, values_from = cover)
+# # type_cov[is.na(type_cov)] <- 0 # turn NA values to 0
+# type_cov <- inner_join(type_cov, plots)
+# 
+# ggplot(type_cov, aes(x = native, y = exotic))+
+#   geom_point(aes(color = site))
+# 
+# # make a data frame with native/nonnative??
+# 
+# # how many plots have mesquite canopy?
+# View(banwr %>% 
+#        inner_join(plots) %>% 
+#   pivot_longer(`HOPOBT`:`DESCOV`, names_to = "spp", values_to = "cover") %>% 
+#   select(-spp, -cover) %>% 
+#   unique() %>% 
+#   group_by(site, MS_canopy) %>% 
+#   summarise(count = n()))
+# 
+# # how many plots have mesquite as a spp?
+# View(banwr %>% 
+#        inner_join(plots) %>% 
+#        pivot_longer(`HOPOBT`:`DESCOV`, names_to = "spp", values_to = "cover") %>% 
+#        filter(spp == "PROVEL") %>% 
+#        mutate(pres = case_when(cover == 0 ~ F, cover != 0 ~ T)) %>% 
+#        select(-MS_canopy) %>% 
+#        group_by(site, pres) %>% 
+#        summarise(count = n()))
+# 
+# # LLG?
+# View(banwr %>% 
+#        inner_join(plots) %>% 
+#        pivot_longer(`HOPOBT`:`DESCOV`, names_to = "spp", values_to = "cover") %>% 
+#        filter(spp == "ERALEH") %>% 
+#        mutate(pres = case_when(cover == 0 ~ F, cover != 0 ~ T)) %>% 
+#        select(-MS_canopy) %>% 
+#        group_by(pres, site) %>% 
+#        summarise(count = n()))
 
 # Ordinations:
 # remove rare species:
@@ -182,47 +186,53 @@ anova(betadisper(vegdist(com, method  = "bray"),
                  group = as.factor(com_plots$MS_canopy), type = "centroid"))
 
 
-com <- com %>% 
-  mutate(ms_discrete = case_when(MS_canopy == 0 ~ F,
-                                 MS_canopy > 0 ~ T))
-
-ggplot(com, aes(x = HOPOBT, y = ms_discrete))+
-  geom_boxplot()
-ggplot(com, aes(x = SETARspp, y = ms_discrete))+
-  geom_boxplot()
-ggplot(com, aes(x = ERALEH, y = ms_discrete))+
-  geom_boxplot()+
-  labs(x = "Lehmann's lovegrass cover (%)",
-       y = "Under mesquite canopy?")+
-  theme_light()
-
-
 # let's investigate these clusters
 # ...with un-standardized data?
 
-com <- rownames_to_column(com, var = "plot") %>% 
-  inner_join(clust_df)
 
-ggplot(com, aes(x = clusters, y = MS_canopy))+
-  geom_boxplot(aes(group = as.factor(clusters)))
+com_un <- banwr_com %>%
+  inner_join(mesq)
 
-ggplot(com, aes(x = clusters, y = ERALEH))+
-  geom_boxplot(aes(group = as.factor(clusters)))
+com <- rownames_to_column(com, var = "plot")
 
-ggplot(com, aes(x = clusters, y = HOPOBT))+
-  geom_boxplot(aes(group = as.factor(clusters)))
+com_un_long <- com_un %>% 
+  pivot_longer(cols = `HOPOBT`:`AMBCON`, names_to = "spp",
+               values_to = "cover") %>% 
+  mutate(cover = case_when(cover == 0 ~ 0.25,
+                           cover != 0 ~ cover)) %>% 
+  mutate(cover_log = log(cover)) %>% 
+  filter(!is.na(cover_log), is.finite(cover_log))
 
-ggplot(com, aes(x = clusters, y = DIGCAL))+
-  geom_boxplot(aes(group = as.factor(clusters)))
+ggplot(com_un_long, aes(x = cover_log, color = MS_canopy))+
+  geom_density()+
+  facet_wrap(~spp)
+
+t.test(filter(com_un_long, spp == "ERALEH", MS_canopy == T)$cover_log,
+       filter(com_un_long, spp == "ERALEH", MS_canopy == F)$cover_log,
+       var.equal = T)
+
+t.test(filter(com_un_long, spp == "HOPOBT", MS_canopy == T)$cover_log,
+       filter(com_un_long, spp == "HOPOBT", MS_canopy == F)$cover_log,
+       var.equal = T)
+
+t.test(filter(com_un_long, spp == "DIGCAL", MS_canopy == T)$cover_log,
+       filter(com_un_long, spp == "DIGCAL", MS_canopy == F)$cover_log,
+       var.equal = T)
+
+
+# 
+# ggplot(com, aes(x = clusters, y = DIGCAL))+
+#   geom_boxplot(aes(group = as.factor(clusters)))
 
 # make long:
 
 com_long <- com %>% 
-  pivot_longer(cols = `HOPOBT`:`MS_canopy`, names_to = "spp", values_to = "cover")
+  pivot_longer(cols = `HOPOBT`:`MS_canopy`, names_to = "spp", values_to = "cover") %>% 
+  inner_join(plots)
 
-ggplot(com_long, aes(x = clusters, y = cover))+
-  # geom_boxplot(aes(group = as.factor(clusters)))+
-  geom_point(alpha = 0.5)+
+ggplot(com_long, aes(x = ms_discrete, y = cover))+
+  geom_boxplot()+
+  # geom_point(alpha = 0.5)+
   facet_wrap(~spp, scales = "free")
 
 
@@ -232,12 +242,28 @@ pca_test <- stats::princomp(x = com)
 biplot(pca_test)
 
 
+pca_veg <- rda(com, scale = T)
+pca_scores <- data.frame(scores(pca_veg, display = "sites"), Site = com_plots$MS_canopy)
+spp_scores <- data.frame(scores(pca_veg, display = "species"))
+spp_scores$variable <- rownames(spp_scores)
+
+ggplot(pca_scores, aes(x = PC1, y = PC2, color = Site))+
+  geom_point()+
+  stat_ellipse(level = 0.95)+
+  geom_segment(data = spp_scores, aes(x = 0, y = 0, xend = PC1, yend = PC2), 
+               arrow = arrow(length = unit(0.2, "cm")), color = "black")+
+  geom_text(data = spp_scores, aes(x = PC1, y = PC2, label = variable), 
+            color = "black", hjust = 1, vjust = -2)+
+  theme_minimal()
+
 ######
 ggplot(com, aes(x = BOUROT, y = ms_discrete))+
   geom_boxplot()+
   labs(x = "Rothrock's grama cover (%)",
        y = "Under mesquite canopy?")+
   theme_light()
+
+
 
 # PCA?
 #install.packages('ggbiplot')

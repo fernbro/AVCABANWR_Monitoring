@@ -38,22 +38,33 @@ write_csv(species, "data/species_list.csv")
 traits <- read_csv("data/species_traits.csv")
 
 type_cov <- full_join(type_cov1, traits) %>% 
-  group_by(plot, nativity) %>% 
+  group_by(plot, nativity, fun) %>% 
   summarise(cover = sum(cover)) %>% 
-  pivot_wider(names_from = nativity, values_from = cover)
+  pivot_wider(names_from = nativity:fun, values_from = cover)
 type_cov[is.na(type_cov)] <- 0 # turn NA values to 0
 type_cov <- inner_join(type_cov, plots)
 
-ggplot(type_cov, aes(x = native, y = exotic))+
+ggplot(type_cov, aes(x = native_grass, y = exotic_grass))+
   geom_point(aes(color = site))
   # geom_boxplot(aes(group = exotic))
 
 
+
 output <- full_join(sums, total_cov) %>% 
-  full_join(type_cov)
+  full_join(type_cov) %>% 
+  mutate(ms_canopy = case_when(ms_canopy == 0 ~ F,
+                               ms_canopy == 1 ~ T))
 output[is.na(output)] <- 0 # turn NAs to zero
 
 write_csv(output, "data/2025_Plot_Summaries.csv")
 
-ggplot(output, aes(x = ms_canopy, y = exotic))+
-  geom_boxplot(aes(group = ms_canopy))
+ggplot(output, aes(x = ms_canopy, y = log(native_grass)))+
+  geom_boxplot(alpha = 0.4, aes(group = ms_canopy, fill = ms_canopy))+
+  theme_minimal(base_size = 20)+
+  labs(x = "Under mesquite canopy", y = "ln Native grass cover (%)")+
+  theme(legend.position = "none")
+
+t.test((filter(output, ms_canopy == T)$native_grass), (filter(output, ms_canopy == F)$native_grass))
+
+
+

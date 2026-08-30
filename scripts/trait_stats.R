@@ -7,13 +7,15 @@ traits <- read_csv("data/09282025_SLAandLWC.csv") %>%
   mutate(sla = case_when(sla < 40 ~ sla,
                          sla >= 40 ~ NA))
 
-anova(lm(sla ~ spp, traits))
+TukeyHSD(aov(lm(sla ~ spp, traits)))
+
+ggplot(filter(traits, spp != "PROVEL"), aes(x = spp))+
+  geom_boxplot(aes(y = sla))+
+  geom_point(aes(y = sla), position = "jitter", alpha = 0.3)+
+  theme_minimal(base_size = 20)+
+  labs(x = "Species", y = "SLA (g/m2)")
 
 ggplot(traits, aes(x = spp))+
-  geom_boxplot(aes(y = sla, group = interaction(spp, site),
-                   color = site))
+  geom_boxplot(aes(y = lwc, group = interaction(spp)))
 
-ggplot(traits, aes(x = spp))+
-  geom_boxplot(aes(y = lwc, group = interaction(spp, site)))
-
-TukeyHSD(aov(lm(lwc ~ spp + site, traits)))
+TukeyHSD(aov(lm(lwc ~ spp, traits)))
