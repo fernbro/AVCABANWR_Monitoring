@@ -9,3 +9,11 @@ plots <- read_csv("data/plots_by_site.csv") # read in plots by site
 names(plots) <- c("plot", "site")
 
 write_csv(banwr, "data/community_pre.csv")
+
+
+# take column sums of all species:
+
+banwr_spp <- data.frame(colSums(dplyr::select(banwr, -plot)))
+
+
+

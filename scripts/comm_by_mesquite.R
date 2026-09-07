@@ -197,15 +197,15 @@ com <- rownames_to_column(com, var = "plot")
 
 com_un_long <- com_un %>% 
   pivot_longer(cols = `HOPOBT`:`AMBCON`, names_to = "spp",
-               values_to = "cover") %>% 
-  mutate(cover = case_when(cover == 0 ~ 0.25,
-                           cover != 0 ~ cover)) %>% 
-  mutate(cover_log = log(cover)) %>% 
-  filter(!is.na(cover_log), is.finite(cover_log))
+               values_to = "cover")
+  # mutate(cover = case_when(cover == 0 ~ 0.25,
+  #                          cover != 0 ~ cover)) %>% 
+  # mutate(cover_log = log(cover)) %>% 
+  # filter(!is.na(cover_log), is.finite(cover_log))
 
-ggplot(com_un_long, aes(x = cover_log, color = MS_canopy))+
+ggplot(com_un_long, aes(x = cover, color = MS_canopy))+
   geom_density()+
-  facet_wrap(~spp)
+  facet_wrap(~spp, scales = "free")
 
 t.test(filter(com_un_long, spp == "ERALEH", MS_canopy == T)$cover_log,
        filter(com_un_long, spp == "ERALEH", MS_canopy == F)$cover_log,
@@ -227,10 +227,10 @@ t.test(filter(com_un_long, spp == "DIGCAL", MS_canopy == T)$cover_log,
 # make long:
 
 com_long <- com %>% 
-  pivot_longer(cols = `HOPOBT`:`MS_canopy`, names_to = "spp", values_to = "cover") %>% 
+  pivot_longer(cols = `HOPOBT`:`AMBCON`, names_to = "spp", values_to = "cover") %>% 
   inner_join(plots)
 
-ggplot(com_long, aes(x = ms_discrete, y = cover))+
+ggplot(com_long, aes(y = cover))+
   geom_boxplot()+
   # geom_point(alpha = 0.5)+
   facet_wrap(~spp, scales = "free")
