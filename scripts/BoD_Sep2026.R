@@ -66,16 +66,27 @@ env_res <- rbind(env_df, env0) # combining them together
 banwr_scores <- data.frame(cbind(scores(banwr_nmds), rownames(com))) # get scores of the NMDS and combine them with the spp names
 names(banwr_scores) <- c("NMDS1", "NMDS2", "plot") # assign column names to df from previous line
 banwr_scores$year <- str_split_i(banwr_scores$plot, " ", 2)
+banwr_scores$plot <- str_split_i(banwr_scores$plot, " ", 1)
 
 banwr_scores <- banwr_scores %>% 
   mutate(NMDS1 = as.numeric(NMDS1), NMDS2 = as.numeric(NMDS2))
 
 banwr_centroids <- banwr_scores %>% 
-  group_by(year) %>% 
+  group_by(year, MS_canopy) %>% 
   summarise(NMDS1 = mean(NMDS1, na.rm = T), 
             NMDS2 = mean(NMDS2, na.rm = T))
 
 library(ggrepel)
+
+banwr <- read_csv("data/community_fall2025.csv")
+provel <- read_csv("data/mesquite_canopy.csv") %>% 
+  mutate(MS_canopy = 1)
+banwr <- full_join(banwr, provel)
+mesq <- dplyr::select(banwr, plot, MS_canopy) %>% 
+  mutate(MS_canopy = case_when(is.na(MS_canopy) ~ F,
+                               MS_canopy == 1 ~ T))
+
+banwr_scores <- inner_join(banwr_scores, mesq)
 
 ggplot(data = banwr_scores, aes(x = NMDS1, y = NMDS2))+
   geom_point(aes(color = as.factor(year)), alpha = 0.3)+
@@ -86,6 +97,38 @@ ggplot(data = banwr_scores, aes(x = NMDS1, y = NMDS2))+
   geom_label_repel(data = env_df, aes(label = spp),
                    size = 5, fill = NA, label.size = NA)+
   theme_light(base_size = 25)
+
+ggplot(data = banwr_scores, aes(x = NMDS1, y = NMDS2))+
+  geom_point(alpha = 0.3)+
+  stat_ellipse(level = 0.99)+
+  geom_point(pch = 24, size = 4, data = banwr_centroids, 
+             aes(fill = as.factor(year), x = NMDS1, y = NMDS2))+
+  geom_line(data = env_res, aes(group = spp))+
+  geom_label_repel(data = env_df, aes(label = spp),
+                   size = 5, fill = NA, label.size = NA)+
+  theme_light(base_size = 25)
+
+ggplot(data = banwr_scores, aes(x = NMDS1, y = NMDS2))+
+  geom_point(alpha = 0.3, aes(color = as.factor(year)))+
+  stat_ellipse(level = 0.95, aes(color = as.factor(year)))+
+  geom_point(pch = 24, size = 4, data = banwr_centroids, 
+             aes(fill = as.factor(year), x = NMDS1, y = NMDS2))+
+  geom_line(data = env_res, aes(group = spp))+
+  geom_label_repel(data = env_df, aes(label = spp),
+                   size = 5, fill = NA, label.size = NA)+
+  theme_light(base_size = 25)+
+  facet_wrap(~MS_canopy)
+
+ggplot(data = banwr_scores, aes(x = NMDS1, y = NMDS2))+
+  geom_point(alpha = 0.3, aes(color = as.factor(MS_canopy)))+
+  stat_ellipse(level = 0.95, aes(color = as.factor(MS_canopy)))+
+  geom_point(pch = 24, size = 4, data = banwr_centroids, 
+             aes(fill = MS_canopy, x = NMDS1, y = NMDS2))+
+  geom_line(data = filter(env_res, spp %in% c("ERALEH", "HOPOBT", "PROVEL", "DIGCAL")), aes(group = spp))+
+  geom_label_repel(data = filter(env_df, spp %in% c("ERALEH", "HOPOBT", "PROVEL", "DIGCAL")), aes(label = spp),
+                   size = 5, fill = NA, label.size = NA)+
+  theme_light(base_size = 25)+
+  facet_wrap(~year)
 
 adonis2(com ~ as.factor(banwr_scores$year), data = com) # anova is sig; difference in mean or dispersion?
 anova(betadisper(vegdist(com, method  = "bray"),

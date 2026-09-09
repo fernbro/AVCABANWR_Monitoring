@@ -1,6 +1,6 @@
 spp,nativity,fun
 HOPOBT,native,grass
-UNKFAB,native,forb
+CROPUM,native,forb
 PANICspp,native,grass
 KALLSspp,native,forb
 ARITER,native,grass
@@ -47,4 +47,12 @@ UnkFb,native,forb
 BOUCUR,native,grass
 ARISTspp,native,grass
 ERAINT,native,grass
-DESCOV,native,forb
+DESCOV,native,shrub
+ATRELE,native,forb
+BOUARI,native,grass
+HEXTER,native,forb
+SALTRA,exotic,forb
+CHENOspp,native,forb
+MACTAG,native,forb
+CYPERspp,native,grass
+ACANEO,native,forb
