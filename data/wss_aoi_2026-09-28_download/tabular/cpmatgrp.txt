@@ -1,0 +1,5 @@
+"alluvium derived from granite and/or alluvium derived from schist"|Yes|"26421514"|"19865086"
+"moderately fine textured alluvium"|Yes|"26421635"|"19865152"
+"moderately coarse textured alluvium"|Yes|"26421636"|"19865153"
+"mixed alluvium"|Yes|"26421653"|"19865163"
+"mixed alluvium"|Yes|"26421654"|"19865164"

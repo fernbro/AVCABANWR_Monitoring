@@ -1,0 +1,23 @@
+AoiSoilThematicMapID: 16905017
+CreationDateTime: "9/28/2026 7:12:24 PM"
+SdvAttributeName: "NRCS Ecological Site ID"
+AggregationMethod: "Dominant Condition"
+TiebreakRule: -1
+UnitsofMeasure: ""
+ComponentPercentCutoff: 0
+InterpretNullsAsZero: "False"
+BeginningMonth: ""
+EndingMonth: ""
+LayerOption: ""
+TopDepth: 0
+BottomDepth: 0
+DepthUnits: ""
+PrimaryDataSelectOptionLabel: ""
+PrimaryDataSelectOption: ""
+SecondaryDataSelectOptionLabel: ""
+SecondaryDataSelectOption: ""
+HorizonAggregationMethod: "Weighted Average"
+ResultDataType: "String"
+ResultPrecision: ""
+ResultColumnName: "EcoSiteID"
+SdvAttributeDescription: "An ""ecological site ID"" is the symbol assigned to a specific ecological site. An ""ecological site"" is the product of all the environmental factors responsible for its development. It has characteristic soils that have developed over time; a characteristic hydrology, particularly infiltration and runoff, that has developed over time; and a characteristic plant community (kind and amount of vegetation). The vegetation, soils, and hydrology are all interrelated. Each is influenced by the others and influences the development of the others. For example, the hydrology of the site is influenced by development of the soil and plant community. The plant community on an ecological site is typified by an association of species that differs from that of other ecological sites in the kind and/or proportion of species or in total production. Descriptions of ecological sites are provided in the Field Office Technical Guide, which is available in local offices of the Natural Resources Conservation Service."

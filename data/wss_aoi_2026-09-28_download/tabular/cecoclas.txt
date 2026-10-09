@@ -1,0 +1,5 @@
+"NRCS Rangeland Site"|"Ecological Site Description Database"|"R041XC319AZ"|"Sandy Loam Upland 12-16"" p.z."|"26421514"|"11905068"
+"NRCS Rangeland Site"|"Ecological Site Description Database"|"R041XC310AZ"|"Loamy Bottom, Woodland 12-16"" p.z."|"26421635"|"11905134"
+"NRCS Rangeland Site"|"Ecological Site Description Database"|"R041XC316AZ"|"Sandy Wash 12-16"" p.z."|"26421636"|"11905135"
+"NRCS Rangeland Site"|"Ecological Site Description Database"|"R041XC313AZ"|"Loamy Upland 12""-16"" p.z."|"26421653"|"11905145"
+"NRCS Rangeland Site"|"Ecological Site Description Database"|"R041XC313AZ"|"Loamy Upland 12""-16"" p.z."|"26421654"|"11905146"

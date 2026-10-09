@@ -1,0 +1,8 @@
+LegendText,RgbString
+"0 - 25","#FF0000"
+"25 - 50","#FFB400"
+"50 - 100","#EBFD5C"
+"100 - 150","#86F7D9"
+"150 - 200","#5796FF"
+"> 200","#0000FF"
+"Not rated or not available","#DCDCDC"

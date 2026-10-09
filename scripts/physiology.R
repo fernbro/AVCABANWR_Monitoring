@@ -11,6 +11,37 @@ phys1 <- read_csv("data/Physiology_10072025.csv") %>%
                           .default = time)) %>% # gap-fill missing times with best guesses
   mutate(time = as_hms(time))
 
+ggplot(phys1, aes(x = spp, y = cond))+
+  geom_boxplot()+
+  theme_minimal(base_size = 30)+
+  labs(x = "Species", y = "Stomatal conductance (mmol/m2/s)")
+ggplot(phys1, aes(x = spp, y = phips2))+
+  geom_boxplot()+
+  theme_minimal(base_size = 30)+
+  labs(x = "Species", y = "phi PSII")
+
+TukeyHSD(aov(cond~spp, phys1))
+TukeyHSD(aov(phips2~spp, phys1))
+
+phys_tr <- phys1 %>% 
+  filter(site == "treatment")
+
+ggplot(phys_tr, aes(x = spp, y = cond))+
+  geom_boxplot()+
+  theme_minimal(base_size = 30)+
+  labs(x = "Species", y = "Stomatal conductance (mmol/m2/s)")
+ggplot(phys_tr, aes(x = spp, y = phips2))+
+  geom_boxplot()+
+  theme_minimal(base_size = 30)+
+  labs(x = "Species", y = "phi PSII")
+
+TukeyHSD(aov(cond~spp, phys_tr))
+TukeyHSD(aov(phips2~spp, phys_tr))
+
+
+
+
+# detrending the "time" effect, which i don't think is the way to do this...:
 #   mutate(time_since_start = seconds(max(time)) - seconds(time))
 
 time_mod <- lm(cond ~ time, phys1)

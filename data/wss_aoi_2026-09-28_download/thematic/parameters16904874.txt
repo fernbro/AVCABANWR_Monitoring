@@ -1,0 +1,25 @@
+AoiSoilThematicMapID: 16904874
+CreationDateTime: "9/28/2026 6:46:09 PM"
+SdvAttributeName: "Range Production (Favorable Year)"
+AggregationMethod: "Weighted Average"
+TiebreakRule: 1
+UnitsofMeasure: "pounds per acre per year"
+ComponentPercentCutoff: 0
+InterpretNullsAsZero: "True"
+BeginningMonth: ""
+EndingMonth: ""
+LayerOption: ""
+TopDepth: 0
+BottomDepth: 0
+DepthUnits: ""
+PrimaryDataSelectOptionLabel: ""
+PrimaryDataSelectOption: ""
+SecondaryDataSelectOptionLabel: ""
+SecondaryDataSelectOption: ""
+HorizonAggregationMethod: "Weighted Average"
+ResultDataType: "Integer"
+ResultPrecision: ""
+ResultColumnName: "RngProdFY"
+SdvAttributeDescription: "Total range production is the amount of vegetation that can be expected to grow annually in a well managed area that is supporting the potential natural plant community. It includes all vegetation, whether or not it is palatable to grazing animals. It includes the current year's growth of leaves, twigs, and fruits of woody plants. It does not include the increase in stem diameter of trees and shrubs. It is expressed in pounds per acre of air-dry vegetation. In a favorable year, the amount and distribution of precipitation and the temperatures make growing conditions substantially better than average. Yields are adjusted to a common percent of air-dry moisture content.
+
+In areas that have similar climate and topography, differences in the kind and amount of vegetation produced on rangeland are closely related to the kind of soil. Effective management is based on the relationship between the soils and vegetation and water."

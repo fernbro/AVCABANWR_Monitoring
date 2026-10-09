@@ -99,8 +99,8 @@ ggplot(data = banwr_scores, aes(x = NMDS1, y = NMDS2))+
   theme_light(base_size = 25)
 
 ggplot(data = banwr_scores, aes(x = NMDS1, y = NMDS2))+
-  geom_point(alpha = 0.3)+
-  stat_ellipse(level = 0.99)+
+  geom_point(alpha = 0.3, aes(color = as.factor(year)))+
+  stat_ellipse(level = 0.99, aes(color = year))+
   geom_point(pch = 24, size = 4, data = banwr_centroids, 
              aes(fill = as.factor(year), x = NMDS1, y = NMDS2))+
   geom_line(data = env_res, aes(group = spp))+

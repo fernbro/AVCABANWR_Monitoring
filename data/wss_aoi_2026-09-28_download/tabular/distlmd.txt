@@ -1,0 +1,5 @@
+"Non-MLRA Soil Survey Area"|"AZ669"|"Pima County, Arizona, Eastern Part"||07/01/1993 00:00:00|"fully certified"|08/27/2025 05:58:34|"1/12/2010 -- Edits to all AASHO and Unified groups made. Due to interpretation rewrite only one group could be represenative, or survey area would not upload to Datamart. KA
+9/9/2008  -- New data set uploaded to Datamart, minor data changes include setting undifferentiated group component percents to zero ""0"" so soil data viewer would rate mapunits, and other very minor changes.
+7/17/2002 -- SSURGO download after re-certification review, as directed by SSS.
+7/15/2006 -- Data elaments updated for NB-430-5-7.
+02/12/2007 -- New download preformed due to more edits to the database, a nontechnical soils descriptions being run for all the components. Corrections and updates to the Ecological Sites, for many of the surveys."|"10279"|"89875"|"89776"

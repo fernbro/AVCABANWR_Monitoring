@@ -1,0 +1,6 @@
+"Landform"|"fan terraces"||||Yes|"26421514"|"42459762"
+"Landform"|"flood plains"||||Yes|"26421635"|"42459900"
+"Landform"|"flood plains"||||Yes|"26421636"|"42459899"
+"Landform"|"fan terraces"||||Yes|"26421653"|"42459889"
+"Landform"|"hills"||||Yes|"26421654"|"42459888"
+"Landform"|"fan terraces"||||Yes|"26421654"|"42459887"

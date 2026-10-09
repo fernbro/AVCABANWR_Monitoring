@@ -1,0 +1,25 @@
+AoiSoilThematicMapID: 16904887
+CreationDateTime: "9/28/2026 6:48:17 PM"
+SdvAttributeName: "Depth to Water Table"
+AggregationMethod: "Dominant Component"
+TiebreakRule: -1
+UnitsofMeasure: "centimeters"
+ComponentPercentCutoff: 0
+InterpretNullsAsZero: "False"
+BeginningMonth: "January"
+EndingMonth: "December"
+LayerOption: ""
+TopDepth: 0
+BottomDepth: 0
+DepthUnits: ""
+PrimaryDataSelectOptionLabel: ""
+PrimaryDataSelectOption: ""
+SecondaryDataSelectOptionLabel: ""
+SecondaryDataSelectOption: ""
+HorizonAggregationMethod: "Weighted Average"
+ResultDataType: "Integer"
+ResultPrecision: ""
+ResultColumnName: "Dep2WatTbl"
+SdvAttributeDescription: """Water table"" refers to a saturated zone in the soil. It occurs during specified months. Estimates of the upper limit are based mainly on observations of the water table at selected sites and on evidence of a saturated zone, namely grayish colors (redoximorphic features) in the soil. A saturated zone that lasts for less than a month is not considered a water table.
+
+This attribute is actually recorded as three separate values in the database. A low value and a high value indicate the range of this attribute for the soil component. A ""representative"" value indicates the expected value of this attribute for the component. For this soil property, only the representative value is used."

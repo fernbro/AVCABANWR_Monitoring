@@ -1,0 +1,4 @@
+LegendText,RgbString
+"<= 750","#FF0000"
+"> 750 and <= 900","#C4FA9E"
+"> 900 and <= 3765","#0000FF"

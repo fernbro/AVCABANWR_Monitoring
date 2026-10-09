@@ -1,0 +1,6 @@
+|||"Alluvium"|"Schist"|"19865086"|"28375882"
+|||"Alluvium"|"Granite"|"19865086"|"28375883"
+||"moderately fine textured"|"Alluvium"||"19865152"|"28375986"
+||"moderately coarse textured"|"Alluvium"||"19865153"|"28375987"
+||"mixed"|"Alluvium"||"19865163"|"28376006"
+||"mixed"|"Alluvium"||"19865164"|"28376007"

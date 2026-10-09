@@ -18,6 +18,7 @@ cult <- st_read("data/Puertocito_Cultural/Cultural_Avoidance_Areas_No RX Burn_No
 spray <- st_read("data/Spray_Area/Spray_Area_Total.shp")
 
 mapview(spray)+mapview(tr)
+mapview(tr)
 
 cult <- st_transform(cult, crs = "epsg:26912")
 
